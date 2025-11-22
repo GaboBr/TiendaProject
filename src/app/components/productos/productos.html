@@ -1,0 +1,36 @@
+<h3>Registro de Productos</h3>
+<a routerLink="/" class="btn btn-secondary mb-3">Volver al Inicio</a>
+
+<form [formGroup]="form" (ngSubmit)="registrar()" class="row g-3 mb-3">
+	<div class="col-md-4">
+		<label>Nombre</label>
+		<input type="text" formControlName="nombre" class="form-control" [ngClass]="{'is-invalid': form.get('nombre')?.invalid && form.get('nombre')?.touched}" />
+		<div *ngIf="form.get('nombre')?.invalid && form.get('nombre')?.touched" class="invalid-feedback">Nombre es requerido.</div>
+	</div>
+
+	<div class="col-md-4">
+		<label>Precio</label>
+		<input type="number" formControlName="precio" class="form-control" [ngClass]="{'is-invalid': form.get('precio')?.invalid && form.get('precio')?.touched}" />
+		<div *ngIf="form.get('precio')?.invalid && form.get('precio')?.touched" class="invalid-feedback">Precio valido requerido.</div>
+	</div>
+
+	<div class="col-md-4">
+		<label>Marca</label>
+		<select formControlName="marcaId" class="form-select" [ngClass]="{'is-invalid': form.get('marcaId')?.invalid && form.get('marcaId')?.touched}">
+			<option [ngValue]="null">-- Seleccione --</option>
+			<option *ngFor="let m of marcas" [value]="m.id">{{m.nombre}}</option>
+		</select>
+		<div *ngIf="form.get('marcaId')?.invalid && form.get('marcaId')?.touched" class="invalid-feedback">Seleccione una marca.</div>
+	</div>
+
+	<div class="col-md-12">
+		<button class="btn btn-primary mt-3" type="submit">Registrar Producto</button>
+	</div>
+</form>
+
+<h4>Productos Registrados</h4>
+<ul class="list-group">
+		<li *ngFor="let p of productos" class="list-group-item">
+			{{p.nombre}} - S/. {{p.precio}} - Marca: {{ getMarcaNombre(p.marcaId) }}
+		</li>
+</ul>
